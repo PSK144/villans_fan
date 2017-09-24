@@ -1,0 +1,54 @@
+create table location(location_id number, street_address varchar2(50), postal_code number, city varchar2(25), state_province varchar2(30),country_id varchar2(5));
+
+insert into location values(1000,'1297 Via vola di rie', 989, 'Roma', null, 'IT');
+insert into location values( 1100, '93091 calle della te' ,10934 , 'Venice' , null , 'IT');
+insert into location values( 1200, '2017 Shinjuku-ku' ,1689 , 'Tokyo' , 'Tokyo Prefectu' , 'JP');
+insert into location values( 1300, '9450 Kmaiya-cho' ,6823 , 'Hiroshima' , null , 'JP');
+insert into location values( 1400, '2014 Jabberwocky' ,26192 , 'Southlake' , 'Texas' , 'US');
+
+create table countries(country_id varchar2(5),country_name varchar2(25), region_id number);
+
+insert into countries values('AR', 'Argentina' ,2 );
+insert into countries values('BR', 'Belgium' ,1 );
+insert into countries values('DK', 'Denmark' ,1 );
+insert into countries values('IT', 'Italy' ,1 );
+insert into countries values('JP', 'Japan' ,3 );
+insert into countries values('SG', 'Singapore' ,3 );
+insert into countries values('US', 'United State' ,2 );
+
+
+1) Global database consultancy CEO Mr. Ramachandra R wants the find the all the address(location_id, street_adress, city, state_provience, country_name) of all the dapartmets.
+		
+		select l.location_id, l.street_address, l.city, l.state_province, c.country_name from location l join countries c using (country_id);
+
+2) Client Krishna approached the global consultancy and enquired the United states details help him to display the list of city, state present in the US.
+
+		select l.city, l.state_province from location l join countries c on c.country_id=l.country_id and c.country_name='United State';
+
+3) Solomon from Texas needs to know the zip code and country details from the Global database consultancy.
+
+		select l.postal_code, c.* from location l join countries c on c.country_id=l.country_id and  l.state_province='Texas';
+
+4) Nigeria people came to the consultancy and enquired the other country details except Nigeria.
+
+		select l.* ,c.* from location l join countries c on c.country_id=l.country_id and c.country_name not in ('Nigeria');
+
+5) A person got a job in New Jersey he needs to settle down there so he needs the region id help him.
+
+		select c.region_id, l.* from location l join countries c on c.country_id=l.country_id and c.country_name='New Jersy';
+
+6) Global database consultancy Manager Christopher wants the dtails of the countries which do not have state provinces.
+
+		select c.* from location l join countries c on c.country_id=l.country_id and state_province = null;	
+
+7) A Client Michael from Australia wants details of the countries which have state province.
+
+		select c.* from location l join countries c on c.country_id=l.country_id and state_province!= null;
+
+8) Annie from Venice needs to know the details of all the countries with and without state province.
+		
+		select c.* from location l join countries c on c.country_id=l.country_id and state_province = null;		
+
+9) A Client Michael from Australia wants details of the countries whichhave state provinces and it should exclude Bombay, Beijing and Tokyo.
+
+		select c.* from location l join countries c on c.country_id=l.country_id and state_province in ('Bombay','Beijing','Tokyo');
