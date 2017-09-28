@@ -52,3 +52,53 @@ insert into countries values('US', 'United State' ,2 );
 9) A Client Michael from Australia wants details of the countries whichhave state provinces and it should exclude Bombay, Beijing and Tokyo.
 
 		select c.* from location l join countries c on c.country_id=l.country_id and state_province in ('Bombay','Beijing','Tokyo');
+
+
+
+
+
+
+
+
+
+create table jobs(id  number, title varchar2(30));
+
+create sequence id_s start with 1 increment by 1 maxvalue 20 nocycle;
+
+insert into jobs values(id_s.nextval,'Tester');
+insert into jobs values(id_s.nextval,'Accountant');
+insert into jobs values(id_s.nextval,'Developer');
+insert into jobs values(id_s.nextval,'Coder');
+insert into jobs values(id_s.nextval,'Director');
+insert into jobs values(id_s.nextval,'Mediator');
+insert into jobs values(id_s.nextval,'Professor');
+insert into jobs values(id_s.nextval,'Programmer');
+insert into jobs values(id_s.nextval,'Developer');
+
+create table employee(id  number, first_name varchar2(20), last_name varchar2(20), start_date date, end_date date, salary number(10,3), city varchar2(15), description varchar2(30));
+
+create sequence id_seq start with 1 increment by 1 maxvalue 20 nocycle;
+
+insert into employee values(id_seq.nextval, 'Jason' ,'Martin' , '25-jul-1996' , '25-jul-2006' , 1234.56 , 'Toronto' , 'Programmer' );
+insert into employee values(id_seq.nextval, 'Alison' ,'Mathews' , '21-mar-1976' , '21-FEB-1986' , 6661.78 , 'Vancouver' , 'Tester' );
+insert into employee values(id_seq.nextval, 'James' , 'Smith' , '12-DEC-1978' , '15-MAR-1990' , 6544.78 , 'Vancouver' , 'Tester');
+insert into employee values(id_seq.nextval, 'Celia' , 'Rice' , '24-oct-1982' , '21-apr-1999' , 2344.78 , 'Vancouver' , 'Manager');
+insert into employee values(id_seq.nextval, 'Robert' , 'Black' , '15-jan-1989' , '08-aug-1998' , 2334.78 , 'Vancouver' , 'Tester');
+insert into employee values(id_seq.nextval, 'Linda' , 'Green' , '30-jul-1987' , '04-jan-1996' , 4322.78 , 'New York' , 'Tester');
+insert into employee values(id_seq.nextval, 'David' , 'Larry' , '31-dec-1990' , '12-feb-1998' , 7897.78 , 'New York' , 'Manager');
+
+
+1) A client with North America wants to know who are the employees coing from the city oxford and London.
+		select j.title, e.* from jobs j join employee e on j.id=e.id and e.city in ('London','oxford');
+
+2) A leading software company starts the recruitment for developer, programmer andtester so they need the employee details who working in this profile.
+		select j.*,e.* from jobs j join employee e on j.title=e.description and j.title in ('Developer','Programmer', 'tester');
+
+3) Company needs to publish the database about the employees who not assigned any job so help them to find the right people.
+		select j.* from jobs j join employee e on j.id=e.id and j.title not in e.description;
+
+4) Company needs to publish the database about the employees who have jobs so helpthem to find the right people.		
+		select j.* from jobs j join employee e on  j.title in e.description;
+
+
+
